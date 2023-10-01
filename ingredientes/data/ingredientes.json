@@ -1,0 +1,57 @@
+[
+    {
+      "fields": {
+        "name": "Lácteos",
+        "description": "Productos lácteos",
+        "tags": ["Leche", "Lácteos", "Vaca"]
+      },
+      "model": "ingredientes.categoria",
+      "pk": 1
+    },
+    {
+      "fields": {
+        "name": "Carnes", 
+        "description": "Productos cárnicos",
+        "tags": ["Carne", "Carnes", "Vaca", "Pollo"]
+      },
+      "model": "ingredientes.categoria",
+      "pk": 2
+    },
+    {
+      "fields": {
+        "name": "Huevos",
+        "description": "Huevos de granja",
+        "tags": ["Huevos", "Gallina"]
+      },
+      "model": "ingredientes.categoria",
+      "pk": 3
+    },
+    {
+      "fields": {
+        "name": "Leche",
+        "notas": "Viene de una vaca, muuuu!",
+        "categoria": 1
+      },
+      "model": "ingredientes.ingrediente",
+      "pk": 1
+    },
+    {
+      "fields": {
+        "name": "Carne de vaca",
+        "notas": "También viene de una vaca muuuu!",
+        "categoria": 2
+      },
+      "model": "ingredientes.ingrediente",
+      "pk": 3
+    },
+    {
+      "fields": {
+        "name": "Pollo",
+        "notas": "Totalmente no viene de una vaca",
+        "categoria": 2
+      },
+      "model": "ingredientes.ingrediente",
+      "pk": 4
+    }
+  ]
+  
