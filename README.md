@@ -4,24 +4,42 @@
 
 @TODO: copiar queries aquí.
 
-Query con paginación:
+Crear pregunta:
 
 ```graphql
-{
-    questions (first: 3, after: "YXJyYXljb25uZWN0aW9uOjEwNQ==") {
-        pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
-        }
-        edges {
-        cursor
-        node {
-            id
-            texto
-        }
-        }
+mutation {
+  createQuestion(texto: "Texto de la nueva pregunta", categoria: "1") {
+    question {
+      id
+      texto
+      creadoPor
+      categoria {
+        name
+      }
     }
+  }
+}
+```
+
+Editar pregunta:
+
+```graphql
+mutation {
+  updateQuestion(id: 1, texto: "Texto editado 1") {
+    question {
+      id
+      texto
+    }
+  }
+}
+```
+
+Borrar pregunta:
+
+```graphql
+mutation {
+  deleteQuestion(id: 1) {
+    success
+  }
 }
 ```

@@ -45,6 +45,68 @@ class PreguntaType(DjangoObjectType):
         now = datetime.datetime.now()
         return now.strftime("%Y-%m-%d %H:%M:%S")
 
+# Mutación para crear una pregunta:
+class CrearPreguntaMutation(graphene.Mutation):
+    class Arguments:
+        # Inputs para la mutación:
+        texto = graphene.String(required=True)
+        categoria = graphene.ID(required=True)
+
+    # Atributos de clase que definen la respuesta de la mutación:
+    question = graphene.Field(PreguntaType)
+
+    @classmethod
+    def mutate(cls, root, info, texto, categoria):
+        # Crea una nueva pregunta con el texto proporcionado
+        question = Pregunta(texto=texto, categoria=Categoria.objects.get(pk=categoria))
+        question.save()
+        
+        # Retorna una instancia de la mutación:
+        return CrearPreguntaMutation(question=question)
+
+# Mutación para actualizar una pregunta:
+class EditarPreguntaMutation(graphene.Mutation):
+    class Arguments:
+        # Inputs para la mutación:
+        texto = graphene.String(required=True)
+        id = graphene.ID()
+
+    # Atributos de clase que definen la respuesta de la mutación:
+    question = graphene.Field(PreguntaType)
+
+    @classmethod
+    def mutate(cls, root, info, texto, id):
+        question = Pregunta.objects.get(pk=id)
+        question.texto = texto
+        question.save()
+        # Retorna una instancia de la mutación:
+        return EditarPreguntaMutation(question=question)
+
+# Mutación para eliminar una pregunta:
+class BorrarPreguntaMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)  # Se requiere el ID de la pregunta a borrar
+
+    success = graphene.Boolean()
+
+    @classmethod
+    def mutate(cls, root, info, id):
+        try:
+            # Intenta borrar la pregunta con el ID proporcionado
+            pregunta = Pregunta.objects.get(pk=id)
+            pregunta.delete()
+            success = True
+        except Pregunta.DoesNotExist:
+            success = False
+        
+        return BorrarPreguntaMutation(success=success)
+
+class Mutation(graphene.ObjectType):
+    create_question = CrearPreguntaMutation.Field()
+    update_question = EditarPreguntaMutation.Field()
+    delete_question = BorrarPreguntaMutation.Field()
+
+# Paginación:
 class PreguntaConnection(relay.Connection):
     class Meta:
         node = PreguntaType
