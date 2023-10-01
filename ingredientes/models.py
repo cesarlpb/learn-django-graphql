@@ -24,3 +24,12 @@ class Ingrediente(models.Model):
 
     def __str__(self):
         return f"Ingrediente: {self.name}"
+    
+class Pregunta(models.Model):
+    texto       = models.TextField()
+    categoria   = models.ForeignKey(
+        Categoria, related_name="preguntas", on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"Pregunta: {self.name}"
