@@ -1,3 +1,4 @@
+import datetime
 import graphene
 from graphene import relay, ObjectType
 from graphene_django import DjangoObjectType
@@ -28,7 +29,20 @@ class IngredienteNode(DjangoObjectType):
 class PreguntaType(DjangoObjectType):
     class Meta:
         model = Pregunta
-        fields = ("id", "texto")
+        # Personaliza los campos que deseas incluir o excluir aquí:
+        """Determina los campos exactos que se incluirán en el tipo de objeto:"""
+        # fields = ("texto", "creado_por") # Todos: __all__
+        # fields = "__all__"
+        """Campos exactos que se excluirán del tipo de objeto:"""
+        exclude = ("top_secret",)
+        # Campo extra que no está en el modelo Pregunta:
+        """Nota: No se puede usar fields y exclude al mismo tiempo."""
+    hora_actual = graphene.String()
+
+    def resolve_hora_actual(self, info):
+        now = datetime.datetime.now()
+        return now.strftime("%Y-%m-%d %H:%M:%S")
+
 
 class Query(ObjectType):
     category = relay.Node.Field(CategoriaNode)
