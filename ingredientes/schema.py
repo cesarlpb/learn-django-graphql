@@ -45,17 +45,31 @@ class PreguntaType(DjangoObjectType):
         now = datetime.datetime.now()
         return now.strftime("%Y-%m-%d %H:%M:%S")
 
+class PreguntaConnection(relay.Connection):
+    class Meta:
+        node = PreguntaType
 
 class Query(ObjectType):
     category = relay.Node.Field(CategoriaNode)
     all_categorias = DjangoFilterConnectionField(CategoriaNode)
     
-    questions = graphene.List(PreguntaType)
+    # questions = graphene.List(PreguntaType) # Devuelve todas las preguntas en una lista
+    questions = relay.ConnectionField(PreguntaConnection) # Devuelve todas las preguntas en una con paginación
     question_by_id = graphene.Field(PreguntaType, id=graphene.String())
 
     ingrediente = relay.Node.Field(IngredienteNode)
     all_ingredientes = DjangoFilterConnectionField(IngredienteNode)
 
+    # Filters
+    search_question = graphene.List(
+        PreguntaType,
+        keyword=graphene.String(required=True)
+    )
+
+    def resolve_search_question(self, info, keyword):
+        # Utiliza el argumento "keyword" para buscar preguntas que contengan la palabra
+        return Pregunta.objects.filter(texto__icontains=keyword) # __icontains: case-insensitive
+    
     def resolve_questions(root, info, **kwargs):
         # Devuelve todas las preguntas en una lista
         return Pregunta.objects.all()
