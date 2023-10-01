@@ -1,0 +1,26 @@
+[
+    {
+      "fields": {
+        "texto": "¿Viene de una vaca?",
+        "categoria": 1
+      },
+      "model": "ingredientes.pregunta",
+      "pk": 1
+    },
+    {
+        "fields": {
+          "texto": "¿Es carne o no?",
+          "categoria": 2
+        },
+        "model": "ingredientes.pregunta",
+        "pk": 2
+    },
+    {
+        "fields": {
+          "texto": "¿Son huevos de granja?",
+          "categoria": 3
+        },
+        "model": "ingredientes.pregunta",
+        "pk": 3
+      }
+]
