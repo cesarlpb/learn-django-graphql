@@ -27,6 +27,8 @@ class Ingrediente(models.Model):
     
 class Pregunta(models.Model):
     texto       = models.TextField()
+    creado_por  = models.CharField(max_length=100, default="Anónimo")
+    top_secret  = models.CharField(max_length=255, default="No deberías ver esto desde el API")
     categoria   = models.ForeignKey(
         Categoria, related_name="preguntas", on_delete=models.CASCADE
     )
