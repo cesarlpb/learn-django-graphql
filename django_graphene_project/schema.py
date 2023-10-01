@@ -11,10 +11,9 @@ class Query(ingredientes.schema.Query, graphene.ObjectType):
     # a agregar más aplicaciones a nuestro proyecto.
     pass
 
-# class Mutation(
-#     ingredientes.schema.Mutation, 
-#     graphene.ObjectType
-# ):
-#     pass
+class Mutation(ingredientes.schema.Mutation, graphene.ObjectType):
+    # Esta clase heredará de varias mutaciones a medida que comencemos
+    # a agregar más aplicaciones a nuestro proyecto.
+    pass
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)
