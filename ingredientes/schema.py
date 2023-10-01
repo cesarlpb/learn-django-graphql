@@ -37,6 +37,8 @@ class PreguntaType(DjangoObjectType):
         exclude = ("top_secret",)
         # Campo extra que no está en el modelo Pregunta:
         """Nota: No se puede usar fields y exclude al mismo tiempo."""
+        # Conversiones de choices a enum:
+        convert_choices_to_enum = False # Necesario si en el modelo se usa string como default
     hora_actual = graphene.String()
 
     def resolve_hora_actual(self, info):

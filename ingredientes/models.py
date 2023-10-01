@@ -29,6 +29,10 @@ class Pregunta(models.Model):
     texto       = models.TextField()
     creado_por  = models.CharField(max_length=100, default="Anónimo")
     top_secret  = models.CharField(max_length=255, default="No deberías ver esto desde el API")
+    estado = models.CharField(
+        max_length=100,
+        choices=(("respondida", "Respondida"), ("no respondida", "No Respondida")),
+        default="No Respondida")
     categoria   = models.ForeignKey(
         Categoria, related_name="preguntas", on_delete=models.CASCADE
     )
